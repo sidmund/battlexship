@@ -1,0 +1,22 @@
+{
+  "name": "battleship",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "cypress": "^13.7.0",
+    "svelte": "^4.2.11",
+    "vite": "^5.1.4"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "jwt-decode": "^4.0.0",
+    "socket.io-client": "^4.7.4"
+  }
+}

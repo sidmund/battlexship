@@ -1,0 +1,35 @@
+{
+    "admin": {
+        "username": "admin",
+        "password": "admin"
+    },
+    "adminWrongPw": {
+        "username": "admin",
+        "password": "bob"
+    },
+    "user": {
+        "username": "user",
+        "password": "user"
+    },
+    "nonExistingUser": {
+        "username": "bob",
+        "password": "bob"
+    },
+    "newUser": {
+        "username": "alice",
+        "password": "wonderland"
+    },
+    "newUserFail": {
+        "username": "admin",
+        "password": "wonderland"
+    },
+    "missingDetails": [
+        {
+            "password": "wonderland"
+        },
+        {
+            "username": "alice"
+        },
+        {}
+    ]
+}

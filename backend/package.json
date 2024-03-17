@@ -1,0 +1,25 @@
+{
+    "scripts": {
+        "start": "nodemon --env-file=.env index.js",
+        "e2e": "rm -f test.db ; DB=test.db ALLOW_RESET_DATABASE=true node --env-file=.env index.js ; rm -f test.db",
+        "test": "rm -f test.db ; PORT=31993 DB=test.db ALLOW_RESET_DATABASE=true start-server-and-test 'node --env-file=.env index.js' http://127.0.0.1:31993 _test_stage2 ; rm -f test.db",
+        "_test_stage2": "cypress run -c baseUrl=http://127.0.0.1:31993; rm test.db"
+    },
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "better-sqlite3": "^9.4.3",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "express": "^4.18.3",
+        "jsonwebtoken": "^9.0.2",
+        "nodemon": "^3.1.0",
+        "passport": "^0.7.0",
+        "passport-jwt": "^4.0.1",
+        "socket.io": "^4.7.4"
+    },
+    "type": "module",
+    "devDependencies": {
+        "cypress": "^13.6.6",
+        "start-server-and-test": "^2.0.3"
+    }
+}
