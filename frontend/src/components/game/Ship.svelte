@@ -16,7 +16,11 @@
     export let planeY = null;
     export let planeAngle = null;
 
+    const textColor = "var(--white)";
+    const selColor = "var(--yellow)";
+
     $: sunk = health <= 0;
+    $: correction = -(size % 2 === 0 ? size / 2 - 0.5 : Math.floor(size / 2));
 </script>
 
 {#if hullAngle === 0}
@@ -28,7 +32,7 @@
             width={1}
             height={size}
             fill="none"
-            stroke="green"
+            stroke={selColor}
             stroke-width="0.06"
         />
         <text
@@ -37,7 +41,7 @@
             font-size="0.4"
             text-anchor="middle"
             dominant-baseline="middle"
-            fill="white"
+            fill={textColor}
         >
             {name}
         </text>
@@ -53,7 +57,7 @@
             width={size}
             height={1}
             fill="none"
-            stroke="green"
+            stroke={selColor}
             stroke-width="0.06"
         />
         <text
@@ -62,7 +66,7 @@
             font-size="0.4"
             text-anchor="middle"
             dominant-baseline="middle"
-            fill="white"
+            fill={textColor}
         >
             {name}
         </text>
@@ -70,7 +74,7 @@
     <g
         class:sunk
         class="rotatable"
-        transform="rotate({hullAngle}) translate(-1, -1)"
+        transform="rotate({hullAngle}) translate({correction}, {correction})"
     >
         <image data-test="ship" href={src} {x} {y} width={1} height={size} />
     </g>

@@ -1,8 +1,22 @@
 <script>
+    import { signal, animate } from "../../lib/motion.js";
+
     export let size;
     export let offsetX = 0;
     export let offsetY = 0;
     export let highlighted = [];
+
+    let gridColor = "var(--purple)";
+    let highlightColor = "var(--white)";
+
+    const highlight = signal({ color: highlightColor });
+
+    animate(async () => {
+        while (true) {
+            await highlight.to({ color: gridColor }, { duration: 250 });
+            await highlight.to({ color: highlightColor }, { duration: 600 });
+        }
+    });
 </script>
 
 <!-- TODO highlight the confirmed target squares (see figma Battleship (2012)) -->
@@ -16,7 +30,7 @@
                 y1={offsetY}
                 x2={offsetX + i}
                 y2={offsetY + size}
-                stroke="white"
+                stroke={gridColor}
                 stroke-width="0.06"
             />
 
@@ -25,7 +39,7 @@
                 y1={offsetY + i}
                 x2={offsetX + size}
                 y2={offsetY + i}
-                stroke="white"
+                stroke={gridColor}
                 stroke-width="0.06"
             />
         {/each}
@@ -39,8 +53,8 @@
             width="1"
             height="1"
             fill="none"
-            stroke="red"
-            stroke-width="0.06"
+            stroke={$highlight.color}
+            stroke-width="0.1"
         />
     {/each}
 
@@ -53,7 +67,7 @@
                 font-size="0.4"
                 text-anchor="middle"
                 dominant-baseline="middle"
-                fill="white"
+                fill={gridColor}
             >
                 {String.fromCharCode(65 + number + (offsetX === 0 ? 0 : size))}
             </text>
@@ -64,7 +78,7 @@
                 font-size="0.4"
                 text-anchor="middle"
                 dominant-baseline="middle"
-                fill="white"
+                fill={gridColor}
             >
                 {number}
             </text>

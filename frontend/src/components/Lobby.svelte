@@ -10,6 +10,7 @@
     import PlayerBadge from "./player/PlayerBadge.svelte";
     import PlayersList from "./player/PlayersList.svelte";
     import Workshop from "./workshop/Workshop.svelte";
+    import BattleVs from "./game/BattleVS.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -171,6 +172,7 @@
                 <PlayerBadge bind:player={me} />
             {/if}
         </div>
+        <BattleVs />
         <div>
             <Button on:click={onLogout} textLeft="Logout" />
         </div>

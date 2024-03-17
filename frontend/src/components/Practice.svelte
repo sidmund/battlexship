@@ -3,6 +3,8 @@
     import { gameStore } from "../stores/game";
     import { api } from "../lib/util";
     import Game from "./game/Game.svelte";
+    import TransparentCard from "./common/TransparentCard.svelte";
+    import BattleVs from "./game/BattleVS.svelte";
 
     let ships = JSON.parse(localStorage.getItem("ships")) || [];
     let error;
@@ -24,17 +26,42 @@
             { username: "You" },
             { username: "Computer" },
             true,
-            ships
+            ships,
         );
     });
 </script>
 
-<header>
-    <h1>Practice mode</h1>
-</header>
-<main>
-    {#if error}
-        <p>{error}</p>
-    {/if}
-    <Game />
-</main>
+<div class="container">
+    <header>
+        <TransparentCard>
+            <h1>Practice Mode</h1>
+        </TransparentCard>
+        <BattleVs />
+        <div></div>
+    </header>
+    <main>
+        <Game />
+    </main>
+    <footer>
+        {#if error}
+            <p>{error}</p>
+        {/if}
+    </footer>
+</div>
+
+<style>
+    .container {
+        position: relative;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100vh;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+</style>

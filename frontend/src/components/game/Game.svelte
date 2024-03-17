@@ -9,6 +9,7 @@
     import Button from "../common/Button.svelte";
     import { createEventDispatcher } from "svelte";
     import Background from "../common/Background.svelte";
+    import Announcement from "../common/Announcement.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -20,6 +21,7 @@
 
     // Svelte only allows top-level store declarations unfortunately
     // Object coords are relative to 0,0
+    // TODO try the technique in the pdf for the ships?
     const carrier = signal({
         name: "Carrier",
         src: "assets/ships/Carrier/ShipCarrierHull.png",
@@ -28,9 +30,9 @@
         size: 5,
         health: 5,
         hullAngle: 0,
-        planeX: 0, // independent of ship x,y
-        planeY: 3,
-        planeAngle: 0,
+        // planeX: 0, // independent of ship x,y
+        // planeY: 3,
+        // planeAngle: 0,
         selected: false,
     });
     const battleship = signal({
@@ -54,9 +56,9 @@
         size: 3,
         health: 3,
         hullAngle: 0,
-        turretX: 0, // relative to ship x,y
-        turretY: 2,
-        turretAngle: 90,
+        // turretX: 0, // relative to ship x,y
+        // turretY: 2,
+        // turretAngle: 90,
         selected: false,
     });
     const submarine = signal({
@@ -67,9 +69,9 @@
         size: 3,
         health: 3,
         hullAngle: 0,
-        turretX: 0, // relative to ship x,y
-        turretY: 0,
-        turretAngle: 90,
+        // turretX: 0, // relative to ship x,y
+        // turretY: 0,
+        // turretAngle: 90,
         selected: false,
     });
     const destroyer = signal({
@@ -80,9 +82,9 @@
         size: 2,
         health: 2,
         hullAngle: 0,
-        turretX: 0, // relative to ship x,y
-        turretY: 0,
-        turretAngle: 90,
+        // turretX: 0, // relative to ship x,y
+        // turretY: 0,
+        // turretAngle: 90,
         selected: false,
     });
 
@@ -108,10 +110,6 @@
         if (name === "Submarine") return submarine;
         if (name === "Destroyer") return destroyer;
         return null;
-    }
-
-    function confirmPlacement() {
-        gameStore.setMode(null);
     }
 
     let highlighted = [];
@@ -221,7 +219,7 @@
             if (selectedShip) {
                 const changes = {
                     name: $selectedShip.name,
-                    hullAngle: 90,
+                    hullAngle: $selectedShip.hullAngle === 0 ? 90 : 0,
                     x: $selectedShip.x,
                     y: $selectedShip.y,
                 };
@@ -274,7 +272,11 @@
 
     function handleKeys(event) {}
 
-    onMount(() => {});
+    async function onConfirmPlacement() {
+        gameStore.setMode(null);
+    }
+
+    onMount(async () => {});
 </script>
 
 <svelte:document
@@ -286,13 +288,7 @@
 
 <Background src="assets/images/battle.jpg" />
 <div class="game-container">
-    <header>
-        {#if $gameStore.player1 && $gameStore.player2}
-            <h1>
-                {$gameStore.player1.username} VS {$gameStore.player2.username}
-            </h1>
-        {/if}
-    </header>
+    <header></header>
     <main>
         <svg
             bind:this={svgElement}
@@ -320,20 +316,22 @@
             {/each}
         </svg>
     </main>
-    {#if $gameStore.mode !== "place"}
-        <Actions />
-    {:else}
-        <footer>
-            <p>Place your ships. R-click to rotate.</p>
-            <Button on:click={confirmPlacement} textLeft="Confirm" />
-        </footer>
-    {/if}
+    <footer>
+        <Actions on:placed={onConfirmPlacement} />
+    </footer>
 </div>
+<Announcement
+    message="Welcome, commander. Your mission is to destroy the enemy fleet. Good luck!"
+/>
 
 <style>
     .game-container {
         grid-column: 1 / -1;
         grid-row: 1 / -1;
+
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100%;
     }
 
     main {

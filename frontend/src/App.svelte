@@ -22,15 +22,20 @@
             return;
         }
 
-        const res = await fetch(
-            `${import.meta.env.VITE_SERVER_URL}/auth/self`,
-            {
-                headers: {
-                    authorization: `bearer ${token}`,
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_SERVER_URL}/auth/self`,
+                {
+                    headers: {
+                        authorization: `bearer ${token}`,
+                    },
                 },
-            },
-        );
-        loggedIn = res.status === 200;
+            );
+            loggedIn = res.status === 200;
+        } catch (error) {
+            console.error(error);
+            loggedIn = false;
+        }
     }
 
     onMount(() => {

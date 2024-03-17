@@ -16,29 +16,31 @@
     }
 </script>
 
-<main>
-    <h1 class="logo">
-        <span>Battle</span><span>&#215;</span><span>Ship</span>
-    </h1>
+{#if menu === 3}
+    <Practice />
+{:else}
+    <main>
+        <h1 class="logo">
+            <span>Battle</span><span>&#215;</span><span>Ship</span>
+        </h1>
 
-    <div>
-        {#if menu === 0}
-            <Button on:click={onLogin} textLeft="Login" />
-            <Button on:click={onRegister} textLeft="Register" />
-            <Button
-                on:click={onPractice}
-                textLeft="Single"
-                textRight="Player"
-            />
-        {:else if menu === 1}
-            <Login on:login />
-        {:else if menu === 2}
-            <Register on:login />
-        {:else if menu === 3}
-            <Practice />
-        {/if}
-    </div>
-</main>
+        <div>
+            {#if menu === 0}
+                <Button on:click={onLogin} textLeft="Login" />
+                <Button on:click={onRegister} textLeft="Register" />
+                <Button
+                    on:click={onPractice}
+                    textLeft="Single"
+                    textRight="Player"
+                />
+            {:else if menu === 1}
+                <Login on:login />
+            {:else if menu === 2}
+                <Register on:login />
+            {/if}
+        </div>
+    </main>
+{/if}
 
 <style>
     main {
