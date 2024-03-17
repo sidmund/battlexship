@@ -1,8 +1,10 @@
 <script>
     import { beforeUpdate, afterUpdate } from "svelte";
     import { scale } from "svelte/transition";
-    import Button from "./common/Button.svelte";
     import { createEventDispatcher } from "svelte";
+    import Button from "../common/Button.svelte";
+    import IconTitle from "../common/IconTitle.svelte";
+    import ContentCard from "../common/ContentCard.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -28,8 +30,20 @@
     }
 </script>
 
-<div class="chat">
-    <h1>Chat</h1>
+<ContentCard>
+    <IconTitle>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 256 256"
+            ><path
+                fill="currentColor"
+                d="M128 20a108 108 0 1 0 108 108A108.12 108.12 0 0 0 128 20m-20.93 152h41.86A115.75 115.75 0 0 1 128 209.85A115.75 115.75 0 0 1 107.07 172m-5.66-24a142.55 142.55 0 0 1 0-40h53.18a142.55 142.55 0 0 1 0 40ZM44 128a83.49 83.49 0 0 1 2.43-20h30.79a164.54 164.54 0 0 0 0 40H46.43A83.49 83.49 0 0 1 44 128m104.93-44h-41.86A115.75 115.75 0 0 1 128 46.15A115.75 115.75 0 0 1 148.93 84m29.85 24h30.79a83.52 83.52 0 0 1 0 40h-30.79a164.54 164.54 0 0 0 0-40m20.74-24H174a148.59 148.59 0 0 0-13.95-33.63A84.5 84.5 0 0 1 199.52 84M96 50.37A148.59 148.59 0 0 0 82 84H56.48A84.5 84.5 0 0 1 96 50.37M56.48 172H82a148.59 148.59 0 0 0 14 33.63A84.5 84.5 0 0 1 56.48 172m103.57 33.63A148.59 148.59 0 0 0 174 172h25.52a84.5 84.5 0 0 1-39.47 33.63"
+            /></svg
+        >
+        <span>Chat</span>
+    </IconTitle>
     <div class="scrollable" bind:this={div}>
         {#each messages as message (message.id)}
             <article class="message" in:scale>
@@ -44,27 +58,16 @@
             <Button disabled={!message} on:click={onMessage} textLeft="Send" />
         </div>
     </form>
-</div>
+</ContentCard>
 
 <style>
-    .chat {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid white;
-    }
-
     .scrollable {
-        flex: 1 1 auto;
-        /* margin-bottom: 20px; */
         overflow-y: auto;
         display: flex;
         flex-direction: column;
     }
 
-    .message {
-        /* padding: 10px; */
-        /* margin: 10px 15px; */
-        max-width: 80%;
-        width: fit-content;
+    form input {
+        width: 100%;
     }
 </style>

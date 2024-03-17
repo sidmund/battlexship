@@ -1,15 +1,15 @@
 <script>
+    import { onMount, onDestroy, createEventDispatcher } from "svelte";
     import { io } from "socket.io-client";
     import { gameStore } from "../stores/game";
-    import PlayerBadge from "./common/PlayerBadge.svelte";
-    import Chat from "./Chat.svelte";
-    import Workshop from "./Workshop.svelte";
-    import PlayersList from "./PlayersList.svelte";
-    import Button from "./common/Button.svelte";
-    import { onMount, onDestroy, createEventDispatcher } from "svelte";
-    import Game from "./Game.svelte";
-    import ConnectionStatus from "./common/ConnectionStatus.svelte";
     import Background from "./common/Background.svelte";
+    import Button from "./common/Button.svelte";
+    import Chat from "./chat/Chat.svelte";
+    import ConnectionStatus from "./common/ConnectionStatus.svelte";
+    import Game from "./game/Game.svelte";
+    import PlayerBadge from "./player/PlayerBadge.svelte";
+    import PlayersList from "./player/PlayersList.svelte";
+    import Workshop from "./workshop/Workshop.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -164,50 +164,51 @@
 </script>
 
 <Background src="assets/images/workshop.jpg" />
-<header>
-    <div>
-        {#if me}
-            <PlayerBadge bind:player={me} />
-        {/if}
-    </div>
-    <div>
-        <Button on:click={onLogout} textLeft="Logout" />
-    </div>
-</header>
-<main>
-    {#if $gameStore.status === "playing"}
-        <Game on:updateship={onUpdateShip} />
-    {:else}
-        <div class="lobby">
+<div class="container">
+    <header>
+        <div>
+            {#if me}
+                <PlayerBadge bind:player={me} />
+            {/if}
+        </div>
+        <div>
+            <Button on:click={onLogout} textLeft="Logout" />
+        </div>
+    </header>
+    <main class="lobby">
+        {#if $gameStore.status === "playing"}
+            <Game on:updateship={onUpdateShip} />
+        {:else}
             <Workshop bind:ships />
             <PlayersList bind:players {inQueue} on:queue={onQueue} />
             <Chat bind:messages on:message={onMessage} />
-        </div>
-    {/if}
-</main>
-<footer>
-    <ConnectionStatus {status} {socketId} />
-</footer>
+        {/if}
+    </main>
+    <footer>
+        <ConnectionStatus {status} {socketId} />
+    </footer>
+</div>
 
 <style>
+    .container {
+        position: relative;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100vh;
+        padding: 20px;
+        gap: 20px;
+    }
+
     header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px;
     }
 
     .lobby {
         display: grid;
         grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 300px;
         gap: 20px;
-        padding: 20px;
-    }
-
-    footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        padding: 20px;
     }
 </style>

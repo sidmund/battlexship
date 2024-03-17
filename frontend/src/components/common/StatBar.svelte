@@ -5,9 +5,9 @@
 </script>
 
 <article class="stat">
-    <span>{property}</span>
+    <span class="property">{property}</span>
     <span>
-        {#each { length: max } as _, i}
+        {#each { length: max } as _, i (i)}
             <div class="dot" class:empty={i >= value} />
         {/each}
     </span>
@@ -20,13 +20,19 @@
         justify-content: space-between;
     }
 
+    .property {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
     .dot {
         width: 12px;
         height: 12px;
         background: var(--yellow);
         display: inline-block;
         border-radius: 1px;
-        margin: 0 2px;
+        margin: 0 3px;
     }
 
     .dot.empty {

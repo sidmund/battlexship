@@ -56,7 +56,6 @@
 
 <style>
     p {
-        user-select: none;
         display: flex;
         align-items: center;
         gap: 5px;

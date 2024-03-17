@@ -4,13 +4,15 @@
   --magenta: #ab1f65;
   --red: #ff4f69;
   --white: rgb(255, 247, 248);
+  --grey: rgb(224, 216, 216);
   --orange: #ff8142;
   --yellow: #ffda45;
-  --blue: #3368dc;
+  --blue: rgb(51, 104, 220);
   --cyan: rgb(73, 231, 236);
 
   --white-translucent: rgba(255, 247, 248, 0.9);
   --cyan-dark: rgb(73, 231, 236, 0.3);
+  --blue-translucent: rgba(51, 104, 220, 0.7);
 }
 
 /* Font: https://www.behance.net/gallery/6636573/VGER-Grotesque */
@@ -41,6 +43,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
 }
 
 html,
@@ -150,7 +153,13 @@ button {
   font-weight: 400;
 }
 
-button:hover span:first-child {
+button:disabled {
+  border: 4px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+
+button:hover:not(:disabled) span:first-child {
   font-weight: 700;
 }
 
@@ -164,48 +173,23 @@ button span:last-child {
   font-weight: 700;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background: var(--magenta);
   transform: scale(1.05);
   cursor: pointer;
   box-shadow: 0 5px 20px 0 var(--purple);
 }
 
-button:hover span:nth-child(2) {
+button:hover:not(:disabled) span:nth-child(2) {
   color: var(--yellow);
 }
 
-button:hover span:last-child {
+button:hover:not(:disabled) span:last-child {
   color: var(--cyan);
-}
-
-progress[value] {
-  -webkit-appearance: none;
-  appearance: none;
-  border: 2px solid var(--white);
-  border-radius: 2px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-  background-color: var(--white);
-}
-
-progress[value]::-webkit-progress-bar {
-  background-color: var(--white);
-}
-
-progress[value]::-webkit-progress-value {
-  background: var(--blue);
-}
-
-progress[value]::-moz-progress-bar {
-  background: var(--blue);
 }
 
 svg {
   image-rendering: pixelated;
-}
-
-svg text {
-  user-select: none;
 }
 
 svg .rotatable {
@@ -215,4 +199,16 @@ svg .rotatable {
 
 svg g.sunk image {
   filter: brightness(0.5);
+}
+
+/* Animations */
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
 }

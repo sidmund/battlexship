@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { gameStore } from "../stores/game";
     import { api } from "../lib/util";
-    import Game from "./Game.svelte";
+    import Game from "./game/Game.svelte";
 
     let ships = JSON.parse(localStorage.getItem("ships")) || [];
     let error;

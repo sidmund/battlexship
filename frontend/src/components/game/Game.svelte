@@ -1,14 +1,14 @@
 <script>
     import { onMount } from "svelte";
-    import { signal, animate, all } from "../lib/motion.js";
-    import { gameStore } from "../stores/game.js";
-    import Actions from "./game/Actions.svelte";
-    import Grid from "./game/Grid.svelte";
-    import Missile from "./game/Missile.svelte";
-    import Ship from "./game/Ship.svelte";
-    import Button from "./common/Button.svelte";
+    import { signal, animate, all } from "../../lib/motion.js";
+    import { gameStore } from "../../stores/game.js";
+    import Actions from "./Actions.svelte";
+    import Grid from "./Grid.svelte";
+    import Missile from "./Missile.svelte";
+    import Ship from "./Ship.svelte";
+    import Button from "../common/Button.svelte";
     import { createEventDispatcher } from "svelte";
-    import Background from "./common/Background.svelte";
+    import Background from "../common/Background.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -285,49 +285,62 @@
 />
 
 <Background src="assets/images/battle.jpg" />
-<header>
-    {#if $gameStore.player1 && $gameStore.player2}
-        <h1>{$gameStore.player1.username} VS {$gameStore.player2.username}</h1>
+<div class="game-container">
+    <header>
+        {#if $gameStore.player1 && $gameStore.player2}
+            <h1>
+                {$gameStore.player1.username} VS {$gameStore.player2.username}
+            </h1>
+        {/if}
+    </header>
+    <main>
+        <svg
+            bind:this={svgElement}
+            viewBox="{$svg.x} {$svg.y} {$svg.w} {$svg.h}"
+        >
+            <Grid
+                size={10}
+                highlighted={$gameStore.mode === "place" ? highlighted : []}
+            />
+
+            <Ship {...$carrier} />
+            <Ship {...$battleship} />
+            <Ship {...$cruiser} />
+            <Ship {...$submarine} />
+            <Ship {...$destroyer} />
+
+            <Grid
+                size={10}
+                offsetX={12}
+                highlighted={$gameStore.mode === "fire" ? highlighted : []}
+            />
+
+            {#each Object.values($missiles) as missile}
+                <Missile {...missile} />
+            {/each}
+        </svg>
+    </main>
+    {#if $gameStore.mode !== "place"}
+        <Actions />
+    {:else}
+        <footer>
+            <p>Place your ships. R-click to rotate.</p>
+            <Button on:click={confirmPlacement} textLeft="Confirm" />
+        </footer>
     {/if}
-</header>
-<main>
-    <svg bind:this={svgElement} viewBox="{$svg.x} {$svg.y} {$svg.w} {$svg.h}">
-        <Grid
-            size={10}
-            highlighted={$gameStore.mode === "place" ? highlighted : []}
-        />
-
-        <Ship {...$carrier} />
-        <Ship {...$battleship} />
-        <Ship {...$cruiser} />
-        <Ship {...$submarine} />
-        <Ship {...$destroyer} />
-
-        <Grid
-            size={10}
-            offsetX={12}
-            highlighted={$gameStore.mode === "fire" ? highlighted : []}
-        />
-
-        {#each Object.values($missiles) as missile}
-            <Missile {...missile} />
-        {/each}
-    </svg>
-</main>
-{#if $gameStore.mode !== "place"}
-    <Actions />
-{:else}
-    <footer>
-        <p>Place your ships. R-click to rotate.</p>
-        <Button on:click={confirmPlacement} textLeft="Confirm" />
-    </footer>
-{/if}
+</div>
 
 <style>
+    .game-container {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+    }
+
     main {
         display: grid;
         place-content: center;
     }
+
     svg {
         width: 1200px;
         height: 600px;
