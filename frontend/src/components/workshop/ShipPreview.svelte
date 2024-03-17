@@ -3,7 +3,12 @@
 </script>
 
 <div class="preview">
-    <img src="assets/ships/{ship.name}/Ship{ship.name}Hull.png" alt="Ship" />
+    {#if ship}
+        <img
+            src="assets/ships/{ship.name}/Ship{ship.name}Hull.png"
+            alt="Ship"
+        />
+    {/if}
 </div>
 
 <style>

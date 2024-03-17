@@ -1,20 +1,21 @@
 <script>
-    import Button from "../common/Button.svelte";
-    import StatBar from "../common/StatBar.svelte";
+    import StatBar from "./StatBar.svelte";
 
     export let ship;
 </script>
 
 <div class="specs">
-    <h1>{ship.name}</h1>
-    <div>
-        <h4>[ SPECIFICATIONS ]</h4>
-        <StatBar property="Size" value={ship.size} max={5} />
-        <StatBar property="Health" value={ship.health} max={5} />
-    </div>
-    <div>
-        <h4>[ WEAPONS ]</h4>
-    </div>
+    {#if ship}
+        <h1>{ship.name}</h1>
+        <div>
+            <h4>[ SPECIFICATIONS ]</h4>
+            <StatBar property="Size" value={ship.size} max={5} />
+            <StatBar property="Health" value={ship.health} max={5} />
+        </div>
+        <div>
+            <h4>[ WEAPONS ]</h4>
+        </div>
+    {/if}
 </div>
 
 <style>
