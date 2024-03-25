@@ -3,6 +3,7 @@
     import Login from "./Login.svelte";
     import Register from "./Register.svelte";
     import Practice from "./Practice.svelte";
+    import Background from "./common/Background.svelte";
 
     let menu = 0;
     function onLogin() {
@@ -16,6 +17,7 @@
     }
 </script>
 
+<Background src="assets/images/title.jpg" />
 {#if menu === 3}
     <Practice />
 {:else}
