@@ -116,6 +116,8 @@ describe('Users', () => {
         it('can delete myself', () => {
             cy.userRequest('user', { method: 'DELETE', url: '/users/user' }).then(res => {
                 expect(res.status).to.equal(204);
+                // TODO make another DELETE request or try to get the user, to confirm they were deleted
+                // TODO also make sure you check the *persistence* of other test responses too
             });
         });
 

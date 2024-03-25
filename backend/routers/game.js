@@ -16,6 +16,8 @@ router.route('/chat')
     .get(authenticate, getMessages)
     .post(authenticate, selfOrAdmin, postMessage);
 
+// TODO weird to call username username/player/id? get rid of the inconcsistency
+// TODO but first consider if we will implement requests
 router.route('/requests/:username')
     .get(authenticate, selfOrAdmin, getRequests);
 router.route('/requests/:player/:opponent')
